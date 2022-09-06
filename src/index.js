@@ -19,13 +19,10 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 
-
-
 app.use("/api", require("./routes/apiIndex"))
 // app.use("/api", require("./routes/nodemailer"))
 
 app.use("/api", require("./routes/nodemailer"))
 
 
-
-app.listen(PORT, ()=> console.log(`Servidor corriendo en el puerti ${PORT} 🔥`))
+app.listen(PORT, ()=> console.log(`Servidor corriendo en el puerto ${PORT} 🔥`))

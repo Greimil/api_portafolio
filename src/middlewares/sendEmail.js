@@ -1,33 +1,29 @@
-const transporter = require("../controllers/nodemailer")
+const transporter = require("../controllers/nodemailer");
+const {saveEmail} = require("../controllers/saveEmail");
 
-const sendEmail = async (req, res) => {  
-
+const sendEmail = async (req, res) => {
   try {
+    const { name, email, msg } = req.body;
     
-    const {name, email, msg} = req.body
+    console.log(saveEmail(name,email));
 
-    console.log(name, email, msg);
-
+    
     await transporter.sendMail({
-        priority: "high",
-        from: `"Nuevo mensaje desde tu app" < ${email}> `, // sender address
-        to: "greimilnunez@gmail.com", // list of receivers
-        subject: `${name} quiere ponerse en contacto contigo `, // Subject line
-        text: `${msg}`, // plain text body
-        
+      priority: "high",
+      from: {
+        name: name,
+        address: email,
+      }, // sender address
+      to: "greimilnunez@gmail.com",
+      // list of receivers
+      subject: `${name} quiere ponerse en contacto contigo `, // Subject line
+      text: `${msg}`,
     });
 
-    
-    res.status(200).json({mensaje: "Correo enviado a Grey"})
-
-
+    res.status(200).json({ mensaje: "Correo enviado a Grey" });
   } catch (error) {
-    
-    res.status(400).json({mensaje: "Algo salio mal 😭"})
+    res.status(400).json({ mensaje: "Algo salio mal 😭" });
   }
+};
 
-
-
-}
-
-module.exports = sendEmail
+module.exports = sendEmail;
